@@ -1,0 +1,26 @@
+TODO
+
+
+Features
+========
+
+* Add instructions
+* Add a README, with a description of the project
+* Scale the SVG properly according to window size
+* Option to rotate the bead, or to flip horizontally or vertically
+* Some visual way of indicating what parts of the bead can be clicked
+* Highlight on hover
+
+
+Styles
+======
+
+* Enforce a consistent solid-color background
+
+
+Bugs
+====
+
+* Fix issue with increment/decrement buttons in the number field
+
+
