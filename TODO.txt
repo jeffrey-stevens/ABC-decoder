@@ -27,7 +27,14 @@ Bugs
   Update:  This is browser-dependent and can't be suppressed easily.
   The scalability issue is a bug with Firefox.  It's better to leave it alone.
   
-* Set the barcode to 0 when all the text is cleared from the input field.
+* Set the barcode to 0 when the barcode value input text is invalid (or empty),
+  and when the field loses focus.
+  
+  
+Miscellaneous
+=============
+
+* Do thorough testing on the input field inputs.
   
 
 

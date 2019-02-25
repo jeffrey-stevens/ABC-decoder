@@ -6,3 +6,7 @@ JRS 01/01/2019
   a barcode value change.
   
 * Fixed issue with barcodes representation not toggling in Firefox and IE.
+
+* Toggling a barcode bit now toggles a class, which is more robust than
+  directly reading/writing the opacity.  Set CSS styles for toggling the
+  barcode bit opacity.
