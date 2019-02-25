@@ -10,6 +10,7 @@ Features
 * Option to rotate the bead, or to flip horizontally or vertically
 * Some visual way of indicating what parts of the bead can be clicked
 * Highlight on hover
+* Up/Down key press:  Increment/Decrement barcodes?
 
 
 Styles
@@ -21,6 +22,15 @@ Styles
 Bugs
 ====
 
-* Fix issue with increment/decrement buttons in the number field
+* Fix issue with spinner button in the number field.
+  
+  Update:  This is browser-dependent and can't be suppressed easily.
+  The scalability issue is a bug with Firefox.  It's better to leave it alone.
+  
+* Barcode box toggling doesn't work in Firefox or IE (but it does work in
+  Chrome).
+  
+* The barcode representation isn't updated when the barcode value is changed.
+  
 
 

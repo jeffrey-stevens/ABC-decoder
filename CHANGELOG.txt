@@ -1,0 +1,3 @@
+JRS 01/01/2019
+
+* The barcode state is now reset to 0 when the page is reloaded.

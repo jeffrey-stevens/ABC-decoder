@@ -10,7 +10,11 @@
 		}
 		
 		/* Format the barcode number box */
-		#barcode {
+    form {
+      text-align: center;
+    }
+    
+		#barcode-value {
 			font-size: x-large;
 			width: 7ch;
 			margin-top:	30px;
@@ -284,9 +288,9 @@
 		<!-- Display the barcode number box -->
 		
         <div style="display:block; margin:0 auto">
-          <form style="text-align:center" onsubmit="updateBarcode(); return false;">
+          <form onsubmit="updateBarcode(); return false;">
 		  
-            <input type="number" id="barcode" name="barcode"
+            <input type="number" id="barcode-value" name="barcode-value"
               min="0" max="4095" step="1" value="0"
               oninput="updateBarcode(); return false;">
 			  
@@ -299,7 +303,32 @@
 
 
     <script>
+    
+      // Reset the barcode number box upon load
+      document.addEventListener('DOMContentLoaded', initialize);
+      
 
+      function initialize() {
+
+        // Set the barcode value box and the barcode representation to 0
+        document.getElementById("barcode-value").value = 0;
+        updateBarcode();
+        
+        // Add the bead click handlers
+        var box;
+        for (var i = 0; i < 12; i++) {
+          // Get the barcode box element
+          box = document.getElementById("barcode-" + i);
+
+          // Add the click handler
+          box.addEventListener("click", toggleBox);
+
+          // Change the cursor when over a box
+          box.style["cursor"] = "pointer";
+          box.style["cursor"] = "hand";
+      }
+      
+      
       // Get the bit value of a barcode box
       function getBit(bit) {
 
@@ -333,6 +362,7 @@
       }
 
 
+      // Get the current barcode value from the SVG drawing
       function getBarcode() {
 
         var val = 0;
@@ -351,6 +381,7 @@
       }
 
 
+      // Set the barcode boxes in the SVG drawing to the specified barcode value
       function setBarcode(barcode) {
 
         var val;
@@ -365,9 +396,11 @@
       }
 
 
+      // Update the barcode representation based on the contents of the barcode
+      // value input box
       function updateBarcode() {
         // Get the input value
-        var input = document.getElementById("barcode");
+        var input = document.getElementById("barcode-value");
         var barcode = input.value;
 
         if (barcode !== null && !isNaN(barcode) &&
@@ -381,6 +414,7 @@
       }
 
 
+      // Toggle the bit state of a barcode box
       function toggleBox() {
 
         // First, toggle the state
@@ -393,29 +427,14 @@
 
         // Now, update the barcode value
         var barcode = getBarcode();
-        document.getElementById("barcode").value = barcode;
+        document.getElementById("barcode-value").value = barcode;
         updateBarcode();
       }
 
 
-      function initialize() {
 
-        var box;
-        for (var i = 0; i < 12; i++) {
-          box = document.getElementById("barcode-" + i);
-
-          // Add the click handler
-          box.addEventListener("click", toggleBox);
-
-          // Change the cursor when over a box
-          box.style["cursor"] = "pointer";
-          box.style["cursor"] = "hand";
-        }
 
       }
-
-
-      initialize();
 
 
     </script>
