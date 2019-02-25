@@ -23,6 +23,8 @@
 		}
 
     </style>
+
+    
   </head>
 
   <body>
@@ -287,14 +289,11 @@
 
 		<!-- Display the barcode number box -->
 		
-        <div style="display:block; margin:0 auto">
-          <form onsubmit="updateBarcode(); return false;">
-		  
+        <div style="display:block; margin:0 auto; text-align: center;">
+        
             <input type="number" id="barcode-value" name="barcode-value"
-              min="0" max="4095" step="1" value="0"
-              oninput="updateBarcode(); return false;">
-			  
-          </form>
+              min="0" max="4095" step="1" value="0">
+              
         </div>
 
       </div>
@@ -305,28 +304,7 @@
     <script>
     
       // Reset the barcode number box upon load
-      document.addEventListener('DOMContentLoaded', initialize);
-      
-
-      function initialize() {
-
-        // Set the barcode value box and the barcode representation to 0
-        document.getElementById("barcode-value").value = 0;
-        updateBarcode();
-        
-        // Add the bead click handlers
-        var box;
-        for (var i = 0; i < 12; i++) {
-          // Get the barcode box element
-          box = document.getElementById("barcode-" + i);
-
-          // Add the click handler
-          box.addEventListener("click", toggleBox);
-
-          // Change the cursor when over a box
-          box.style["cursor"] = "pointer";
-          box.style["cursor"] = "hand";
-      }
+      document.addEventListener("DOMContentLoaded", initialize);
       
       
       // Get the bit value of a barcode box
@@ -399,6 +377,9 @@
       // Update the barcode representation based on the contents of the barcode
       // value input box
       function updateBarcode() {
+      
+        console.log("Updating the barcode representation...");
+      
         // Get the input value
         var input = document.getElementById("barcode-value");
         var barcode = input.value;
@@ -429,11 +410,36 @@
         var barcode = getBarcode();
         document.getElementById("barcode-value").value = barcode;
         updateBarcode();
+        
       }
+    
+    
+      function initialize() {
+      
+        console.log("Starting initialization...");
 
+        // Set the barcode value box and the barcode representation to 0
+        document.getElementById("barcode-value").value = 0;
+        updateBarcode();
+        
+        // Add the bead click handlers
+        var box;
+        for (var i = 0; i < 12; i++) {
+          // Get the barcode box element
+          box = document.getElementById("barcode-" + i);
 
+          // Add the click handler
+          box.addEventListener("click", toggleBox);
 
-
+          // Change the cursor when over a box
+          box.style["cursor"] = "pointer";
+          box.style["cursor"] = "hand";
+        }
+        
+        // Update the barcode representation dynamically
+        var input = document.getElementById("barcode-value");
+        input.addEventListener("input", updateBarcode);
+          
       }
 
 

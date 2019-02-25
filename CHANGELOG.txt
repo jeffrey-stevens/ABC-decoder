@@ -1,3 +1,8 @@
 JRS 01/01/2019
 
 * The barcode state is now reset to 0 when the page is reloaded.
+
+* Fixed the issue with the barcode representation not updating upon
+  a barcode value change.
+  
+* Fixed issue with barcodes representation not toggling in Firefox and IE.

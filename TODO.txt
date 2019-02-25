@@ -27,10 +27,7 @@ Bugs
   Update:  This is browser-dependent and can't be suppressed easily.
   The scalability issue is a bug with Firefox.  It's better to leave it alone.
   
-* Barcode box toggling doesn't work in Firefox or IE (but it does work in
-  Chrome).
-  
-* The barcode representation isn't updated when the barcode value is changed.
+* Set the barcode to 0 when all the text is cleared from the input field.
   
 
 
