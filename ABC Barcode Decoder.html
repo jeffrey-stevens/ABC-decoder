@@ -314,24 +314,91 @@
       document.addEventListener("DOMContentLoaded", initialize);
       
       
+      function getBoxState(box) {
+      
+        var classes = box.classList;
+        var n = classes.length;
+        
+        var cls;
+        for (var i = 0; i < n; i++) {
+          
+          cls = classes[i];
+          if (cls == "bit-unset") {
+            return 0;
+          } else if (cls == "bit-set") {
+            return 1;
+          }
+          // Ignore everything else...
+        }
+        
+      }
+      
+      function setBoxState(box, state) {
+        // state: 0 or 1
+        
+        if (state != 0 && state != 1) {
+          throw "'state' must be 0 or 1.";
+        }
+        
+        var classes = box.classList;
+        
+        var n = classes.length;
+        
+        var cls;
+        for (var i = 0; i < n; i++) {
+          
+          cls = classes[i];
+          if (cls == "bit-unset") {
+            if (state == 0) {
+              return;
+            } else if (state == 1) {
+              // Toggle the state
+              box.classList.remove("bit-unset");
+              box.classList.add("bit-set");
+              return;
+            }
+            
+          } else if (cls == "bit-set") {
+            if (state == 0) {
+              // Toggle the state
+              box.classList.remove("bit-set");
+              box.classList.add("bit-unset");
+              return;
+            } else if (state == 1) {
+              return;
+            }
+          }
+          // Ignore everything else...
+        }
+        
+        // If there's neither a bit-set nor a bit-unset class, then
+        // set the class directly:
+        if (state == 0) {
+          box.classList.add("bit-unset");
+        } else if (state == 1) {
+          box.classList.add("bit-set");
+        }
+        
+      }
+      
+      
+      function toggleBoxState(box) {
+        var state = getBoxState(box);
+        
+        if (state == 0) {
+          setBoxState(box, 1);
+        } else if (state == 1) {
+          setBoxState(box, 0);
+        }
+      }
+      
+      
       // Get the bit value of a barcode box
       function getBit(bit) {
 
         var box = document.getElementById("barcode-" + bit);
         
-        // The box class should be either bit-unset or bit-set...   
-        var boxclass = box.getAttribute("class");
-        
-        //var opacity = box.style["fill-opacity"];
-        var val;
-        if (boxclass == "bit-unset") {
-          val = 0;
-        } else if (boxclass == "bit-set") {
-          val = 1;
-        } else {
-          // No need to get too descriptive here...
-          throw "Unknown class."
-        }
+        var val = getBoxState(box);
 
         return val;
       }
@@ -341,18 +408,8 @@
       function setBit(bit, val) {
 
         var box = document.getElementById("barcode-" + bit);
-
-        if (val == 0) {
-          // setAttribute is better than className for SVG elements...
-          box.setAttribute("class", "bit-unset");
-          //box.style["fill-opacity"] = "0";
-        } else if (val == 1) {
-          box.setAttribute("class", "bit-set");
-          //box.style["fill-opacity"] = "255";
-        } else {
-          throw "'val' must be 0 or 1."
-        }
-
+        
+        setBoxState(box, val);
       }
 
 
@@ -415,21 +472,12 @@
       function toggleBox() {
 
         // First, toggle the state of the box.
-        // Note that getting the bit number isn't trivial here...
-        // It's easier just to change the class attribute directly:
-        var boxclass = this.getAttribute("class");
+        toggleBoxState(this);
         
-        if (boxclass == "bit-unset") {
-          this.setAttribute("class", "bit-set");
-        } else if (boxclass == "bit-set") {
-          this.setAttribute("class", "bit-unset");
-        }
-
         // Now, update the barcode value
         var barcode = getBarcode();
         document.getElementById("barcode-value").value = barcode;
         updateBarcode();
-        
       }
     
     
