@@ -12,3 +12,5 @@ JRS 01/01/2019
   barcode bit opacity.
   
 * Added the ability to add multiple classes to a barcode bit box.
+
+* Implemented box shading upon hover.

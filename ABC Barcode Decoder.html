@@ -17,7 +17,16 @@
     
     .bit-set {
       fill: #000000;
-      fill-opacity: 255;
+      fill-opacity: 1;
+    }
+    
+    /* Change the color of the box upon hover */
+    .bit-unset.hover {
+      fill-opacity: 0.15;
+    }
+    
+    .bit-set.hover {
+      fill-opacity: 0.60;
     }
 		
 		/* Format the barcode number box */
@@ -342,41 +351,12 @@
         
         var classes = box.classList;
         
-        var n = classes.length;
-        
-        var cls;
-        for (var i = 0; i < n; i++) {
-          
-          cls = classes[i];
-          if (cls == "bit-unset") {
-            if (state == 0) {
-              return;
-            } else if (state == 1) {
-              // Toggle the state
-              box.classList.remove("bit-unset");
-              box.classList.add("bit-set");
-              return;
-            }
-            
-          } else if (cls == "bit-set") {
-            if (state == 0) {
-              // Toggle the state
-              box.classList.remove("bit-set");
-              box.classList.add("bit-unset");
-              return;
-            } else if (state == 1) {
-              return;
-            }
-          }
-          // Ignore everything else...
-        }
-        
-        // If there's neither a bit-set nor a bit-unset class, then
-        // set the class directly:
         if (state == 0) {
-          box.classList.add("bit-unset");
+          classes.remove("bit-set");
+          classes.add("bit-unset");
         } else if (state == 1) {
-          box.classList.add("bit-set");
+          classes.remove("bit-unset");
+          classes.add("bit-set");
         }
         
       }
@@ -474,10 +454,52 @@
         // First, toggle the state of the box.
         toggleBoxState(this);
         
+        // Remove the hover state until the mouse leaves the box
+        clearHoverState(this);
+        
         // Now, update the barcode value
         var barcode = getBarcode();
         document.getElementById("barcode-value").value = barcode;
         updateBarcode();
+      }
+      
+      
+      // This may not be necessary...
+      function getHoverState(box) {
+        
+        var classes = box.classList;
+        var n = classes.length;
+        
+        // Try to find a "hover" item in the class list
+        var cls;
+        for (var i = 0; i < n; i++) {
+          
+          cls = classes[i];
+          if (cls == "hover") return 1;
+          
+        }
+        
+        // This point will only be reached if the hover class isn't set
+        return 0;
+      }
+      
+      
+      function setHoverState(box) {
+      
+        // Don't set it if the state is currently set
+        var state = getHoverState(box);
+        
+        // Only add the class if the class hasn't already been added
+        if (state == 0) {
+          box.classList.add("hover");
+        }
+      
+      }
+      
+      function clearHoverState(box) {
+      
+        // There should only be at most one "hover" item
+        box.classList.remove("hover");
       }
     
     
@@ -497,6 +519,14 @@
 
           // Add the click handler
           box.addEventListener("click", toggleBox);
+          
+          // Change the box styling when the mouse enters/leaves the box
+          box.addEventListener("mouseenter", function() {
+            setHoverState(this);
+          });
+          box.addEventListener("mouseleave", function() {
+            clearHoverState(this);
+          });
 
           // Change the cursor when over a box
           box.style["cursor"] = "pointer";
