@@ -4,7 +4,6 @@ TODO
 Features
 ========
 
-* Add instructions
 * Add a README, with a description of the project
 * Scale the SVG properly according to window size
 * Option to rotate the bead, or to flip horizontally or vertically

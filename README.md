@@ -20,6 +20,7 @@ decode barcode patterns visually.
 
 1. Open "ABC Barcode Decoder.html" in a browser (Chrome or Firefox). This is
 what a "Barcode 0" bead looks like when magnified.
+
 2. The barcode encodes a binary number between 0 and 4095, identifying beads
 coated with the same analyte. Hover the mouse over the bead image. Regions that
 turn gray represent the "bits" of the barcode. Click to "set" the bit; click
